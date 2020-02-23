@@ -1,0 +1,15 @@
+.Card {
+  background: lightblue;
+  margin: 10px;
+  width: 200px;
+  height: 320px;
+  border-radius: 6px;
+  padding: 10px;
+  box-shadow: 0 0 5px #ddd;
+  cursor: pointer;
+  transition: 0.2s all linear;
+}
+
+.Card:hover {
+  box-shadow: 0 0 15px #ccc;
+}
