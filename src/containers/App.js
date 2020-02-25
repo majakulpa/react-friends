@@ -1,29 +1,38 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import CardList from "../components/CardList";
 import SearchBox from "../components/SearchBox";
 import Scroll from "../components/Scroll";
 import ErrorBoundry from "../components/ErrorBoundry";
+import { setSearchField } from "./../actions";
+
+const mapStateToProps = state => {
+  return {
+    searchField: state.searchField
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onSearchChange: event => dispatch(setSearchField(event.target.value))
+  };
+};
 
 class App extends Component {
   state = {
-    robots: [],
-    searchField: ""
+    robots: []
   };
 
   componentDidMount() {
+    //console.log(this.props.store.getState);
     fetch("https://jsonplaceholder.typicode.com/users")
       .then(response => response.json())
       .then(users => this.setState({ robots: users }));
   }
 
-  onSearchChange = event => {
-    //console.log(event.target.value);
-    this.setState({ searchField: event.target.value });
-    //console.log(filteredRobots);
-  };
-
   render() {
-    const { robots, searchField } = this.state;
+    const { robots } = this.state;
+    const { searchField, onSearchChange } = this.props;
     const style = {
       textAlign: "center"
     };
@@ -37,7 +46,7 @@ class App extends Component {
     ) : (
       <div style={style}>
         <h1>My Friends</h1>
-        <SearchBox searchChange={this.onSearchChange} />
+        <SearchBox searchChange={onSearchChange} />
         <Scroll>
           <ErrorBoundry>
             <CardList robots={filteredRobots} />
@@ -48,4 +57,7 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
