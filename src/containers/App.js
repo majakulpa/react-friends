@@ -1,10 +1,13 @@
-import React, { Component } from "react";
+import React, { Component, Suspense } from "react";
 import { connect } from "react-redux";
 import CardList from "../components/CardList";
 import SearchBox from "../components/SearchBox";
+import Header from "../components/Header";
 import Scroll from "../components/Scroll";
 import ErrorBoundry from "../components/ErrorBoundry";
 import { setSearchField, requestRobots } from "./../actions";
+
+//const PageLazy = React.lazy(() => import("../components/CardList"));
 
 const mapStateToProps = state => {
   return {
@@ -46,7 +49,7 @@ class App extends Component {
     });
 
     return isPending ? (
-      <h1>Loading...</h1>
+      <Header />
     ) : (
       <div style={style}>
         <h1>My Friends</h1>
@@ -58,6 +61,20 @@ class App extends Component {
         </Scroll>
       </div>
     );
+
+    // return (
+    //   <div style={style}>
+    //     <Header />
+    //     <SearchBox searchChange={onSearchChange} />
+    //     <Scroll>
+    //       <ErrorBoundry>
+    //         <Suspense fallback={<h1>Loading...</h1>}>
+    //           <PageLazy robots={filteredRobots} />
+    //         </Suspense>
+    //       </ErrorBoundry>
+    //     </Scroll>
+    //   </div>
+    // );
   }
 }
 
