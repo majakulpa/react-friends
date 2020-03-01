@@ -12,6 +12,7 @@ const SearchBox = ({ searchField, searchChange }) => {
   return (
     <div>
       <input
+        aria-label="Search Robots"
         onChange={searchChange}
         style={style}
         type="search"
